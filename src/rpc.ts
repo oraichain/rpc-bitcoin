@@ -376,7 +376,10 @@ export class RPCClient extends RESTClient {
   fullResponse?: boolean;
 
   constructor({ user = '', pass, wallet, fullResponse, ...options }: RPCIniOptions) {
-    super({ ...options, options: { Authorization: 'Basic ' + Buffer.from(user + ':' + pass).toString('base64') } });
+    if (user && pass) {
+      options.options = { Authorization: 'Basic ' + Buffer.from(user + ':' + pass).toString('base64') };
+    }
+    super({ ...options });
 
     this.fullResponse = fullResponse ? true : false;
     this.wallet = typeof wallet === 'string' ? wallet : undefined;

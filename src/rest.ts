@@ -15,7 +15,7 @@ export type HeaderParams = BlockParams & { count?: number };
 
 export type TxParams = formatParam & { txid: string };
 
-export type RESTIniOptions = { url?: string; port?: number; timeout?: number; options?: HeadersInit };
+export type RESTIniOptions = { host?: string; port?: number; timeout?: number; options?: HeadersInit };
 
 export class RESTClient {
   private baseUrl: string = '';
@@ -29,8 +29,8 @@ export class RESTClient {
    * @param {number} [params.timeout=30000]
    * @param {...*} [params.options]
    */
-  constructor({ url = 'http://localhost', port = 8332, timeout = 30000, options }: RESTIniOptions = {}) {
-    this.baseUrl = `${url}:${port}`;
+  constructor({ host = 'http://localhost', port = 8332, timeout = 30000, options }: RESTIniOptions = {}) {
+    this.baseUrl = `${host}:${port}`;
     this.timeout = timeout;
     this.options = options;
   }
