@@ -1,4 +1,4 @@
-export type formatParam = { format?: 'json' | 'hex' | 'bin' };
+export type formatParam = { format?: "json" | "hex" | "bin" };
 
 export type BlockParams = formatParam & { hash: string };
 
@@ -15,10 +15,15 @@ export type HeaderParams = BlockParams & { count?: number };
 
 export type TxParams = formatParam & { txid: string };
 
-export type RESTIniOptions = { host?: string; port?: number; timeout?: number; options?: HeadersInit };
+export type RESTIniOptions = {
+  host?: string;
+  port?: number;
+  timeout?: number;
+  options?: HeadersInit;
+};
 
 export class RESTClient {
-  private baseUrl: string = '';
+  private baseUrl: string = "";
   private timeout: number = 0;
   private options?: HeadersInit = undefined;
 
@@ -29,7 +34,12 @@ export class RESTClient {
    * @param {number} [params.timeout=30000]
    * @param {...*} [params.options]
    */
-  constructor({ host = 'http://localhost', port = 8332, timeout = 30000, options }: RESTIniOptions = {}) {
+  constructor({
+    host = "http://localhost",
+    port = 8332,
+    timeout = 30000,
+    options,
+  }: RESTIniOptions = {}) {
     this.baseUrl = `${host}:${port}`;
     this.timeout = timeout;
     this.options = options;
@@ -38,25 +48,25 @@ export class RESTClient {
   async get({ uri }: { uri: string }) {
     const url = new URL(uri, this.baseUrl);
     return fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        ...this.options
+        "Content-Type": "application/json",
+        ...this.options,
       },
-      signal: AbortSignal.timeout(this.timeout)
+      signal: AbortSignal.timeout(this.timeout),
     }).then((res) => res.json());
   }
 
   async post({ uri, body }: { uri: string; body: BodyInit }) {
     const url = new URL(uri, this.baseUrl);
     return fetch(url, {
-      method: 'POST',
+      method: "POST",
       body,
       headers: {
-        'Content-Type': 'application/json',
-        ...this.options
+        "Content-Type": "application/json",
+        ...this.options,
       },
-      signal: AbortSignal.timeout(this.timeout)
+      signal: AbortSignal.timeout(this.timeout),
     }).then((res) => res.json());
   }
 
@@ -66,7 +76,7 @@ export class RESTClient {
    * @param {string} params.hash - The hash of the header of the block to get
    * @param {string} [params.format='json'] - Set to 'json' for decoded block contents in JSON, or 'bin' or 'hex' for a serialized block in binary or hex
    */
-  getBlock({ hash, format = 'json' }: BlockParams) {
+  getBlock({ hash, format = "json" }: BlockParams) {
     return this.get({ uri: `/rest/block/${hash}.${format}` });
   }
 
@@ -76,7 +86,7 @@ export class RESTClient {
    * @param {string} params.hash - The hash of the header of the block to get
    * @param {string} [params.format='json'] - Set to 'json' for decoded block contents in JSON, or 'bin' or 'hex' for a serialized block in binary or hex
    */
-  getBlockNoTxDetails({ hash, format = 'json' }: BlockParams) {
+  getBlockNoTxDetails({ hash, format = "json" }: BlockParams) {
     return this.get({ uri: `/rest/block/notxdetails/${hash}.${format}` });
   }
 
@@ -86,7 +96,7 @@ export class RESTClient {
    * @param {number} params.height - The height of the block
    * @param {string} [params.format='json'] - Set to `json`, `bin` or `hex`.
    */
-  getBlockHashByHeight({ height, format = 'json' }: BlockHeightParams) {
+  getBlockHashByHeight({ height, format = "json" }: BlockHeightParams) {
     return this.get({ uri: `/rest/blockhashbyheight/${height}.${format}` });
   }
 
@@ -94,7 +104,7 @@ export class RESTClient {
    * @description Get information about the current state of the block chain.
    */
   getChainInfo() {
-    return this.get({ uri: 'rest/chaininfo.json' });
+    return this.get({ uri: "rest/chaininfo.json" });
   }
 
   /**
@@ -104,13 +114,13 @@ export class RESTClient {
    * @param {Object|Object[]} params.outpoints - The list of outpoints to be queried.
    * @param {string} [params.format='json'] - Set to `json`, `bin` or `hex`.
    */
-  getUtxos({ checkmempool = true, outpoints, format = 'json' }: UtxosParams) {
-    let uri = `rest/getutxos${checkmempool ? '/checkmempool' : ''}`;
+  getUtxos({ checkmempool = true, outpoints, format = "json" }: UtxosParams) {
+    let uri = `rest/getutxos${checkmempool ? "/checkmempool" : ""}`;
     outpoints = !Array.isArray(outpoints) ? [outpoints] : outpoints;
     for (const { txid, n } of outpoints) {
       uri += `/${txid}-${n}`;
     }
-    return this.get({ uri: uri + '.' + format });
+    return this.get({ uri: uri + "." + format });
   }
 
   /**
@@ -120,7 +130,7 @@ export class RESTClient {
    * @param {string} params.hash - The hash of the header of the block to get
    * @param {string} [params.format='json'] - Set to `json`, `bin` or `hex`.
    */
-  getHeaders({ count, hash, format = 'json' }: HeaderParams) {
+  getHeaders({ count, hash, format = "json" }: HeaderParams) {
     return this.get({ uri: `rest/headers/${count}/${hash}.${format}` });
   }
 
@@ -128,14 +138,14 @@ export class RESTClient {
    * @description Get all transaction in the memory pool with detailed information.
    */
   getMemPoolContents() {
-    return this.get({ uri: 'rest/mempool/contents.json' });
+    return this.get({ uri: "rest/mempool/contents.json" });
   }
 
   /**
    * @description Get information about the node’s current transaction memory pool.
    */
   getMemPoolInfo() {
-    return this.get({ uri: 'rest/mempool/info.json' });
+    return this.get({ uri: "rest/mempool/info.json" });
   }
 
   /**
@@ -144,7 +154,7 @@ export class RESTClient {
    * @param {string} params.txid - The TXID of the transaction to get.
    * @param {string} [params.format='json'] - Set to `json`, `bin` or `hex`.
    */
-  getTx({ txid, format = 'json' }: TxParams) {
+  getTx({ txid, format = "json" }: TxParams) {
     return this.get({ uri: `rest/tx/${txid}.${format}` });
   }
 }

@@ -204,8 +204,7 @@ const action = "start";
 const scanobjects = [
   "addr(mxosQ4CvQR8ipfWdRktyB3u16tauEdamGc)",
   {
-    desc:
-      "wpkh([d34db33f/84'/0'/0']tpubD6NzVbkrYhZ4YTN7usjEzYmfu4JKqnfp9RCbDmdKH78vTyuwgQat8vRw5cX1YaZZvFfQrkHrM2XsyfA8cZE1thA3guTBfTkKqbhCDpcKFLG/0/*)#8gfuh6ex",
+    desc: "wpkh([d34db33f/84'/0'/0']tpubD6NzVbkrYhZ4YTN7usjEzYmfu4JKqnfp9RCbDmdKH78vTyuwgQat8vRw5cX1YaZZvFfQrkHrM2XsyfA8cZE1thA3guTBfTkKqbhCDpcKFLG/0/*)#8gfuh6ex",
     range: [1, 3],
   },
 ];
@@ -281,7 +280,7 @@ const address = "1HLoD9E4SDFFPDiYfNYnkBLQ85Y51J3Zb1";
 const wallet = "bitcoin-core-wallet.dat";
 const result = await client.generatetoaddress(
   { nblocks, address, maxtries },
-  wallet
+  wallet,
 );
 ```
 
@@ -584,7 +583,7 @@ const result = await client.fundrawtransaction(
     options,
     iswitness,
   },
-  wallet
+  wallet,
 );
 ```
 
@@ -752,7 +751,7 @@ const label = "NewMultiSigAddress";
 const address_type = "bech32";
 const result = await client.addmultisigaddress(
   { nrequired, keys, label, address_type },
-  wallet
+  wallet,
 );
 ```
 
@@ -914,7 +913,7 @@ const rescan = false;
 const p2sh = false;
 const result = await client.importaddress(
   { address, label, rescan, p2sh },
-  wallet
+  wallet,
 );
 ```
 
@@ -924,8 +923,7 @@ const result = await client.importaddress(
 const wallet = "bitcoin-core-wallet.dat";
 const requests = [
   {
-    desc:
-      "wpkh(tpubD6NzVbkrYhZ4Wk5MMULiQd4XkBe3KeG6GCUNrWcXu27PJwqFfHF7geuTPfPZcViUpV7ny6MHVnbvxdCSfkooFb7bBJiQgKXCVM58XZiVyHu/0/*)#9tk43hcd",
+    desc: "wpkh(tpubD6NzVbkrYhZ4Wk5MMULiQd4XkBe3KeG6GCUNrWcXu27PJwqFfHF7geuTPfPZcViUpV7ny6MHVnbvxdCSfkooFb7bBJiQgKXCVM58XZiVyHu/0/*)#9tk43hcd",
     range: [2, 5],
     internal: true,
     watchonly: true,
@@ -965,7 +963,7 @@ const txoutproof =
   "000040205853c9a97816b63b9bb539f7b4cfb8c8a36ee0d9b6e1c59df102000000000000ab93331e4cae84da202131b6418e61e30095a81108edb09376ad7d02768d72c348ff9a5d74c4031a712e7b5614000000040cce7e642af08fd68ddcf0b7630ad88c4110c91fcdb7f792f6253bef56181bf201d52b2f5696dd23973b09dd34c2447aadeeb31ada2ff4b1d88d238c8cb2081a0a6331dd8ded7863f79cd3574812d032d5bc7c96df137ddb0d3b794ac2a26f199b66a00a8b8376f3bd0b1c7f9827b403242976d1dc16ed8bc6ec7e11c1f028bf02dd00";
 const result = await client.importprunedfunds(
   { rawtransaction, txoutproof },
-  wallet
+  wallet,
 );
 ```
 
@@ -1028,7 +1026,7 @@ const include_watchonly = false;
 const address_filter = "tb1qyferlkpvr7v3r5ne7jh2avjuvnxkf08lqhpqe9";
 const result = await client.listreceivedbyaddress(
   { minconf, include_empty, include_watchonly, address_filter },
-  wallet
+  wallet,
 );
 ```
 
@@ -1041,7 +1039,7 @@ const include_empty = true;
 const include_watchonly = true;
 const result = await client.listreceivedbylabel(
   { minconf, include_empty, include_watchonly },
-  wallet
+  wallet,
 );
 ```
 
@@ -1056,7 +1054,7 @@ const include_watchonly = true;
 const include_removed = false;
 const result = await client.listsinceblock(
   { blockhash, target_confirmations, include_watchonly, include_removed },
-  wallet
+  wallet,
 );
 ```
 
@@ -1070,7 +1068,7 @@ const skip = 4;
 const include_watchonly = true;
 const result = await client.listtransactions(
   { label, count, skip, include_watchonly },
-  wallet
+  wallet,
 );
 ```
 
@@ -1093,7 +1091,7 @@ const query_options = {
 };
 const result = await client.listunspent(
   { minconf, maxconf, addresses, include_unsafe, query_options },
-  wallet
+  wallet,
 );
 ```
 
@@ -1150,7 +1148,7 @@ const start_height = 1566870;
 const stop_height = 1566970;
 const result = await client.rescanblockchain(
   { start_height, stop_height },
-  wallet
+  wallet,
 );
 ```
 
@@ -1178,7 +1176,7 @@ const result = await client.sendmany(
     conf_target,
     estimate_mode,
   },
-  wallet
+  wallet,
 );
 ```
 
@@ -1205,7 +1203,7 @@ const result = await client.sendtoaddress(
     conf_target,
     estimate_mode,
   },
-  wallet
+  wallet,
 );
 ```
 
@@ -1270,7 +1268,7 @@ const prevtxs = [
 const sighashtype = "ALL|ANYONECANPAY";
 const result = await client.signrawtransactionwithwallet(
   { hexstring, prevtxs, sighashtype },
-  wallet
+  wallet,
 );
 ```
 
@@ -1310,7 +1308,7 @@ const options = {
 const bip32derivs = true;
 const result = await client.walletcreatefundedpsbt(
   { inputs, outputs, locktime, options, bip32derivs },
-  wallet
+  wallet,
 );
 ```
 
@@ -1338,7 +1336,7 @@ const oldpassphrase = "SecretPassphraseDoNotTellAnyone";
 const newpassphrase = "VerySecretPassphraseDoNotTellAnyone";
 const result = await client.walletpassphrasechange(
   { oldpassphrase, newpassphrase },
-  wallet
+  wallet,
 );
 ```
 
@@ -1353,7 +1351,7 @@ const sighashtype = "ALL|ANYONECANPAY";
 const bip32derivs = true;
 const result = await client.walletprocesspsbt(
   { psbt, sign, sighashtype, bip32derivs },
-  wallet
+  wallet,
 );
 ```
 
