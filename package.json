@@ -1,12 +1,15 @@
 {
   "name": "@oraichain/rpc-bitcoin",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "A TypeScript library to make RPC and HTTP REST requests to Bitcoin Core",
   "main": "build/index.js",
   "type": "commonjs",
   "engines": {
     "node": ">=10.19.0"
   },
+  "files": [
+    "build"
+  ],
   "types": "build/index.d.ts",
   "scripts": {
     "build": "rm -fr build && tsc",
